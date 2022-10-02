@@ -21,7 +21,11 @@ export class ArticlesService {
     return newArticle;
   }
   async findAll() {
-    const articles = await this.articleRepository.find();
+    const articles = await this.articleRepository.find({
+      order: {
+        createdAt: 'ASC',
+      },
+    });
     return articles;
   }
 

@@ -3,11 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+
 import { AuthModule } from './auth/auth.module';
 import { ArticlesModule } from './articles/articles.module';
 import * as Joi from 'joi';
 import { DatabaseModule } from './database.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -23,8 +24,8 @@ import { DatabaseModule } from './database.module';
       }),
     }),
     DatabaseModule,
+    AuthModule,
     UsersModule,
-
     ArticlesModule,
   ],
   controllers: [AppController],

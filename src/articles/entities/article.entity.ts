@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('article')
+@Entity('articles')
 export class ArticleEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,7 +18,4 @@ export class ArticleEntity {
 
   @CreateDateColumn()
   createdAt: Date;
-
-  //   @ManyToOne(() => UserEntity, (userEntity) => userEntity.feedPosts)
-  //   author: UserEntity;
 }
