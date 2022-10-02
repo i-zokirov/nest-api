@@ -6,8 +6,10 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { AdminGuard } from 'src/auth/admin.guard';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 import { ArticlesService } from './articles.service';
@@ -21,8 +23,8 @@ export class ArticlesController {
   @UseGuards(AuthenticatedGuard)
   @UseGuards(AdminGuard)
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  create(@Body() createArticleDto: CreateArticleDto, @Req() request: Request) {
+    return this.articlesService.create(createArticleDto, request.user);
   }
 
   @UseGuards(AuthenticatedGuard)

@@ -2,9 +2,8 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ArticleEntity } from './entities/article.entity';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class ArticlesService {
@@ -12,9 +11,10 @@ export class ArticlesService {
     @InjectRepository(ArticleEntity)
     private readonly articleRepository: Repository<ArticleEntity>,
   ) {}
-  async create(articleDto: CreateArticleDto) {
+  async create(articleDto: CreateArticleDto, user) {
     const newArticle = this.articleRepository.create({
       ...articleDto,
+      author: user,
       createdAt: new Date(),
     });
     await this.articleRepository.save(newArticle);
@@ -25,6 +25,7 @@ export class ArticlesService {
       order: {
         createdAt: 'ASC',
       },
+      relations: ['author'],
     });
     return articles;
   }
@@ -34,6 +35,7 @@ export class ArticlesService {
       where: {
         id,
       },
+      relations: ['author'],
     });
     if (article) {
       return article;

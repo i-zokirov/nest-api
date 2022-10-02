@@ -34,7 +34,7 @@ export class UsersController {
   @UseGuards(AuthenticatedGuard)
   @Get(':id')
   async findOne(@Param('id') id: string, @Req() request: Request) {
-    return this.usersService.findOne(id);
+    return this.usersService.findById(parseInt(id));
   }
 
   @UseGuards(AuthenticatedGuard)
